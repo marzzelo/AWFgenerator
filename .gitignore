@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+work/
+data/
+Editor_AFG1062.zip
+*.log
