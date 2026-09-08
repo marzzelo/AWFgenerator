@@ -2,6 +2,8 @@
 
 Editor local de formas de onda en Python, con vista previa en el navegador y exportación de archivos TFW para cargar mediante pendrive en un Tektronix AFG1062.
 
+![Captura del editor de formas de onda AFG1062](screenshot.png)
+
 ## Inicio rápido
 
 Requiere **Python 3.10 o posterior**. Utiliza únicamente la biblioteca estándar: no requiere instalar paquetes, Tkinter, VISA ni permisos de administrador.
