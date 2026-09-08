@@ -50,7 +50,7 @@ class WaveformTests(unittest.TestCase):
         self.assertEqual(y,[1,1,-1,-1])
 
     def test_invalid_settings(self):
-        for kw in [dict(points=1),dict(points=4.5),dict(points=131073),dict(period=0),dict(vpp=0),dict(formula='2'),dict(offset='nan'),dict(period=1e-6,points=4096)]:
+        for kw in [dict(points=1),dict(points=4.5),dict(points=1000001),dict(period=0),dict(vpp=0),dict(formula='2'),dict(offset='nan'),dict(period=1e-6,points=4096)]:
             with self.assertRaises(ValueError):build(self.spec(**kw))
 
     def test_binary_independent_offsets(self):

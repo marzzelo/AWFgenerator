@@ -1,4 +1,4 @@
-"""Waveform math and experimental TFW codec; Python standard library only."""
+"""Waveform math and TFW codec; Python standard library only."""
 import ast
 import base64
 import csv
@@ -8,7 +8,7 @@ import struct
 import zipfile
 import json
 
-MAX_POINTS = 131072  # conservative application limit, not the AFG1062 hardware limit
+MAX_POINTS = 1_000_000  # application sample limit
 MAGIC = b'TEKAFG3000'
 VERSION = 20050114
 FUNCS = {n: getattr(math, n) for n in ('sin', 'cos', 'tan', 'exp', 'sqrt', 'log', 'log10', 'floor', 'ceil', 'tanh', 'asin', 'acos', 'atan')}
@@ -136,7 +136,7 @@ def build(spec):
                 rms_normalized=math.sqrt(sum(v*v for v in y)/n),
                 mean_normalized=sum(y)/n, seam_step=actual[0]-actual[-1],
                 quantization_max_error=max(abs(a-b) for a,b in zip(y,actual)),
-                hardware_validation='Pendiente de prueba en AFG1062',
+                hardware_validation='Validación física exitosa en AFG1062, confirmada por el usuario',
                 sampling='t[i]=i*T/N, i=0..N-1. El extremo T no se duplica.')
     return y, codes, meta
 
@@ -169,7 +169,7 @@ def package(spec, template=None):
     y, codes, meta = build(spec)
     tfw = encode_tfw(codes, template)
     assert parse_tfw(tfw) == codes
-    meta['tfw_header'] = 'Plantilla existente; cabecera conservada (miniatura puede ser antigua)' if template else 'Cabecera mínima experimental; campos restantes en cero'
+    meta['tfw_header'] = 'Plantilla existente; cabecera conservada (miniatura puede ser antigua)' if template else 'Cabecera mínima; campos restantes en cero'
     stream = io.StringIO(newline='')
     writer = csv.writer(stream)
     writer.writerow(['t_s', 'y_normalized', 'dac_14bit', 'voltage_preview_V'])
@@ -188,7 +188,7 @@ Estos ajustes NO están guardados en el TFW. Configurarlos en el equipo.
 La amplitud efectiva depende del rango usado por la señal y de la carga real.
 N/T es la tasa equivalente de la tabla; no afirma el reloj DAC interno.
 {meta['tfw_header']}
-Compatibilidad física: pendiente. Primero validar con una onda simple y osciloscopio.
+Compatibilidad física: validación exitosa en AFG1062, confirmada por el usuario.
 No se comunica con el generador ni habilita salidas.
 Extraer el ZIP y copiar ONDA.tfw al pendrive (no copiar solamente el ZIP).
 En AFG1000: Arb > Others > File browse > USBDEVICE > Enter; seleccionar ONDA.tfw.

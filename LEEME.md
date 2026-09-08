@@ -24,28 +24,27 @@ La aplicación no accede a los instrumentos, no activa salidas y no escribe dire
 - Nodos: dos columnas `u,y`, ordenadas estrictamente, desde u=0 a u=1; interpolación lineal.
 - CSV: una columna y, o dos columnas t,y. Los tiempos deben estar en segundos, ser crecientes y uniformes. En dos columnas se usa `T=N·Δt`, ignorando el período del formulario. El origen temporal se traslada a cero. No hay remuestreo automático. Un CSV que ya incluye ambos extremos de un ciclo debe prepararse eliminando la muestra final duplicada antes de importarlo.
 - Separadores: coma, punto y coma o tabulación. Con punto y coma o tabulación puede usarse coma decimal. Encabezado opcional mediante casilla explícita.
-- Límite conservador de esta aplicación: 2 a 131 072 muestras, no el máximo anunciado del equipo. N/T debe ser ≤300 MS/s; es una tasa equivalente de la tabla, no una afirmación sobre el reloj DAC interno.
+- Límite de esta aplicación: 2 a 1 000 000 de muestras. N/T debe ser ≤300 MS/s; es una tasa equivalente de la tabla, no una afirmación sobre el reloj DAC interno.
 - Vista previa tras cuantización de 14 bits: `V=offset + Vpp·y/2`. La amplitud de salida real depende de la carga y configuración del generador; los límites eléctricos deben verificarse en el AFG1062.
 - La vista preserva mínimos y máximos de bloques al reducir puntos para pantalla; no es una simulación de la respuesta analógica del generador. La línea punteada indica el cierre periódico.
 
 ## Estado del formato TFW
 
-**La compatibilidad física de los archivos generados está pendiente de prueba en el AFG1062.**
+**Validación física en el AFG1062 exitosa, confirmada por Marcelo Valdéz.**
 
 El código implementa la estructura identificada en el ejemplo de lectura publicado por Tektronix: cabecera de 512 bytes, identificador TEKAFG3000, versión 20050114, cantidad de puntos y datos de 16 bits sin signo en orden big-endian. Los códigos usados son de 14 bits, 0..16383.
 
-La exportación predeterminada usa una **cabecera mínima experimental**: pone en cero los campos de cabecera que el ejemplo no describe. No se afirma que esta cabecera sea una especificación oficial de escritura ni que todos los firmwares la acepten.
+La exportación predeterminada usa una **cabecera mínima**: pone en cero los campos de cabecera que el ejemplo no describe. No se afirma que esta cabecera sea una especificación oficial de escritura ni que todos los firmwares la acepten.
 
-Como alternativa, se puede cargar una plantilla TFW válida guardada por ArbExpress o por un instrumento. Debe tener exactamente el mismo N, identificador y versión admitidos. Se conserva su cabecera completa y se reemplazan solo las muestras. Si contiene una miniatura, será la anterior. Tampoco se garantiza aceptación sin prueba en el equipo.
 
 El TFW no contiene frecuencia, amplitud ni offset. No renombrar un CSV a TFW: son formatos diferentes.
 
 ## Archivos del paquete exportado
 
-- ONDA.tfw: tabla de muestras para probar en el equipo.
+- ONDA.tfw: tabla de muestras para cargar en el equipo.
 - AJUSTES.txt: instrucciones y configuración manual.
 - DATOS.csv: tiempo, valores normalizados, códigos DAC y tensión prevista. Es un archivo de auditoría de cuatro columnas; para reimportarlo en el editor seleccionar/preparar las dos primeras columnas, o abrir PROYECTO.json.
-- PROYECTO.json: definición editable (no incluye el archivo de plantilla).
+- PROYECTO.json: definición editable.
 - METADATOS.json: muestreo, normalización y cuantización.
 
 ## Fuentes técnicas consultadas

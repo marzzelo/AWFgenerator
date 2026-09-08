@@ -1,6 +1,6 @@
 # AWFgenerator
 
-Editor local de formas de onda en Python, con vista previa en el navegador y exportación de archivos TFW para probar su carga mediante pendrive en un Tektronix AFG1062.
+Editor local de formas de onda en Python, con vista previa en el navegador y exportación de archivos TFW para cargar mediante pendrive en un Tektronix AFG1062.
 
 ## Inicio rápido
 
@@ -22,13 +22,13 @@ En Windows también se puede abrir `Iniciar.cmd`. La aplicación abre el navegad
 - Vista previa de la tensión prevista tras cuantización de 14 bits.
 - Normalización opcional, guardado y apertura de proyectos JSON.
 - Exportación de un ZIP con `ONDA.tfw`, datos CSV, proyecto y ajustes para configurar manualmente el instrumento.
-- Uso opcional de una cabecera TFW existente con la misma cantidad de puntos.
+- Hasta 1 000 000 de muestras por registro.
 
 ## Uso con pendrive
 
 Generar la vista previa, descargar y extraer el paquete ZIP y copiar **ONDA.tfw** al pendrive. Consultar **AJUSTES.txt** para configurar la frecuencia de repetición, amplitud, offset y carga en el generador.
 
-**La exportación TFW es experimental y está pendiente de validación física en el AFG1062.** La estructura binaria se basa en un ejemplo de lectura publicado por Tektronix para AFG3000. La cabecera mínima contiene campos no documentados en cero. Las pruebas de software no garantizan la aceptación por el firmware ni la señal analógica resultante. El editor no se comunica con el instrumento ni activa sus salidas.
+**Validación física TFW en el AFG1062 exitosa, confirmada por Marcelo Valdéz.** El editor no se comunica con el instrumento ni activa sus salidas.
 
 El archivo TFW no contiene frecuencia, amplitud ni offset. Estos ajustes se aplican manualmente en el equipo. Verificar la primera señal con osciloscopio antes de utilizarla en un ensayo.
 
